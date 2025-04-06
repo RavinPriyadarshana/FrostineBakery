@@ -11,21 +11,21 @@ class RegisterController {
         $email = trim($_POST['email'] ?? '');
         $phone = trim($_POST['phone'] ?? '');
         $password = $_POST['password'] ?? '';
-        $branch = trim($_POST['branch'] ?? '');
+        // $branch = trim($_POST['branch'] ?? '');
 
         // Validation
-        if (empty($fullname) || empty($email) || empty($phone) || empty($password) || empty($branch)) {
+        if (empty($fullname) || empty($email) || empty($phone) || empty($password)) {
             $error = "Please fill out all required fields.";
             require 'views/register.php';
             return;
         }
 
-        $branch_id = $this->getBranchIdByName($branch);
-        if (!$branch_id) {
-            $error = "Invalid branch selected.";
-            require 'views/register.php';
-            return;
-        }
+        // $branch_id = $this->getBranchIdByName($branch);
+        // if (!$branch_id) {
+        //     $error = "Invalid branch selected.";
+        //     require 'views/register.php';
+        //     return;
+        // }
 
         $username = $email;
         $userModel = new User();
@@ -37,7 +37,7 @@ class RegisterController {
         }
 
         try {
-            $userModel->save($fullname, $username, $email, $phone, $password, $branch_id);
+            $userModel->save($fullname, $username, $email, $phone, $password);
             header("Location: index.php?page=home&registered=1");
             exit;
         } catch (PDOException $e) {

@@ -1,0 +1,32 @@
+body {
+    font-family: Arial;
+    background: #f9f9f9;
+    padding: 20px;
+  }
+  form, table {
+    background: #fff;
+    padding: 20px;
+    margin: 10px auto;
+    border-radius: 10px;
+    width: 80%;
+  }
+  input, button {
+    padding: 10px;
+    margin: 10px 0;
+    width: 100%;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  nav a {
+    margin-right: 15px;
+  }
+  .error {
+    color: red;
+  }
+  

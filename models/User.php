@@ -9,13 +9,15 @@ class User {
         $this->db = $pdo;
     }
 
-    public function save($name, $username, $email, $phone, $password, $branch_id) {
+    // Save new user
+    public function save($name, $username, $email, $phone, $password) {
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-        $stmt = $this->db->prepare("INSERT INTO users (name, username, email, phone, password, branch_id) 
-                                    VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$name, $username, $email, $phone, $hashedPassword, $branch_id]);
+        $stmt = $this->db->prepare("INSERT INTO users (name, username, email, phone, password, branch_id, role) 
+                                    VALUES (?, ?, ?, ?, ?, NULL, NULL)");
+        $stmt->execute([$name, $username, $email, $phone, $hashedPassword]);
     }
 
+    // User login
     public function login($username, $password) {
         $stmt = $this->db->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
         $stmt->execute([$username, $username]);
@@ -28,9 +30,27 @@ class User {
         return false;
     }
 
+    // Check if username/email already exists
     public function userExists($username) {
         $stmt = $this->db->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
         $stmt->execute([$username, $username]);
         return $stmt->fetch() ? true : false;
     }
+
+    // Get all users
+    public function getAll() {
+        return [
+            ["id" => 1, "name" => "Alice", "email" => "alice@mail.com"],
+            ["id" => 2, "name" => "Bob", "email" => "bob@mail.com"]
+        ];
+    }
+
+    public function getById($id) {
+        return ["id" => $id, "name" => "Example", "email" => "user@example.com"];
+    }
+
+    public function delete($id) {
+        // Simulated deletion
+    }
 }
+?>

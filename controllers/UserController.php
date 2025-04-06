@@ -22,6 +22,7 @@ class UserController {
             if ($user) {
                 session_start();
                 $_SESSION["user"] = $user;
+                $_SESSION["user_role"] = $user['role'];
                 header("Location: index.php?page=dashboard");
                 exit;
             } else {

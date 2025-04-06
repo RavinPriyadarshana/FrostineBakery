@@ -6,26 +6,64 @@
         </div>
         <nav>
             <ul>
-                <li><a href="index.php?page=home">Home</a></li>
+                <?php
+                if (isset($_SESSION['user'])) {
+                    if ($_SESSION['user_role']  == 'HeadManager') {
+                ?>
+                        <li><a href="index.php?page=dashboard">Home</a></li>
+                    <?php }
+
+                    if (!$_SESSION['user_role'] || $_SESSION['user_role']  == null || $_SESSION['user_role']  == '') {
+                    ?>
+                        <li><a href="index.php?page=home">Home</a></li>
+                    <?php
+                    }
+
+
+                    if ($_SESSION['user_role']  == 'Admin') {
+                    ?>
+                        <li><a href="index.php?page=admin">Home</a></li>
+                <?php
+                    }
+                }
+                ?>
                 <!-- Products Dropdown Menu -->
                 <li class="dropdown">
                     <a href="#" class="dropbtn">Products</a>
                     <div class="dropdown-content">
-                        <!-- Updated to link to new category pages using the 'page' parameter -->
-                        <a href="index.php?page=cake">Cake</a>
-                        <a href="index.php?page=bread">Bread</a>
-                        <a href="index.php?page=waffle">Waffle</a>
-                        <a href="index.php?page=pancake">Pancake</a>
-                        <a href="index.php?page=short_eats">Short Eats</a>
+                        <a href="index.php?page=category&type=cake">Cake</a>
+                        <a href="index.php?page=category&type=bread">Bread</a>
+                        <a href="index.php?page=category&type=waffle">Waffle</a>
+                        <a href="index.php?page=category&type=pancake">Pancake</a>
+                        <a href="index.php?page=category&type=short_eats">Short Eats</a>
                     </div>
                 </li>
                 <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact Us</a></li>
+                <li><a href="index.php?page=contact_us">Contact Us</a></li>
+                <li><a href="index.php?page=cart">Cart</a></li>
+                <li><a href="index.php?page=my-orders">My Orders</a></li>
+
+                <?php
+                if (isset($_SESSION['user'])) {
+                ?>
+                    <li><a href="index.php?page=logout">Logout</a></li>
+                <?php
+                }
+                ?>
+
+
             </ul>
         </nav>
-        <div class="auth-buttons">
-            <a href="index.php?page=login">Login</a>
-            <a href="index.php?page=register">Register</a>
-        </div>
+
+        <?php
+        if (!isset($_SESSION['user'])) {
+        ?>
+            <div class="auth-buttons">
+                <a href="index.php?page=login">Login</a>
+                <a href="index.php?page=register">Register</a>
+            </div>
+
+        <?php  }
+        ?>
     </div>
 </header>

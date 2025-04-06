@@ -25,7 +25,7 @@
 
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" placeholder="Enter your password" required>
-
+<!-- 
                 <label for="branch">Select Branch</label>
                 <select name="branch" id="branch" required>
                     <option value="">-- Select Branch --</option>
@@ -33,7 +33,7 @@
                     <option value="Gampaha">Gampaha</option>
                     <option value="Horana">Horana</option>
                     <option value="Galle">Galle</option>
-                </select>
+                </select> -->
 
                 <input type="submit" value="Register">
             </form>

@@ -1,0 +1,6 @@
+<h2>Edit User</h2>
+<form method="POST">
+  <input type="text" name="name" value="<?= $user['name'] ?>">
+  <input type="email" name="email" value="<?= $user['email'] ?>">
+  <button type="submit">Update</button>
+</form>
