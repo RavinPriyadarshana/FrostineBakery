@@ -36,4 +36,18 @@ class StockController
             exit();
         }
     }
+
+    public function editStockForm()
+    {
+        $productStockModel = new Stock();
+        $stock = $productStockModel->findById($_GET['id']);
+        require 'views/admin/edit_stock.php'; // View to edit stock
+    }
+
+    public function updateStock()
+    {
+        $productStockModel = new Stock();
+        $productStockModel->updateQuantity($_POST['id'], $_POST['quantity']);
+        header("Location: index.php?page=stock-list"); // Redirect after update
+    }
 }

@@ -13,7 +13,7 @@
     <?php include 'views/includes/header.php'; ?>
 
     <main>
-        <div class="form-container">
+        <div class="order-container">
             <h2>Add Employee</h2>
             <form method="POST" action="index.php?page=save-employee">
                 <input type="text" name="name" placeholder="Full Name" required>

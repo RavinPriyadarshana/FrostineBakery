@@ -1,5 +1,6 @@
 <?php
 require_once 'models/Product.php';
+require_once 'models/Stock.php';
 class ProductController
 {
     public function showCategory($type)
@@ -19,8 +20,8 @@ class ProductController
 
     public function showAllStock()
     {
-        $productStockModel = new Product();
-        $products = $productStockModel->getAllStock();
+        $stockModel = new Stock();
+        $stockItems = $stockModel->getAllStockItems();
         require 'views/admin/stock_list.php'; // View to show stock list
     }
 

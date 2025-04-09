@@ -32,19 +32,23 @@
                             <td><?= $item['name'] ?></td>
                             <td><?= $item['price'] ?></td>
                             <td>
-                                <form action="index.php?page=cart&action=update" method="POST">
+
+                                <form action="index.php?page=cart&action=update_cart" method="POST">
                                     <input type="number" name="quantity" value="<?= $item['quantity'] ?>" min="1">
-                                    <input type="hidden" name="product_id" value="<?= $productId ?>">
-                                    <input type="submit" value="Update">
+                                    <input type="hidden" name="product_id" value="<?php echo $item['product_id']; ?>">
+                                    <input type="submit" value="Update" class="update-btn">
                                 </form>
+
                             </td>
                             <td><?= $item['price'] * $item['quantity'] ?></td>
                             <td>
-                                <form action="index.php?page=cart&action=remove" method="POST">
-                                    <input type="hidden" name="product_id" value="<?= $productId ?>">
-                                    <input type="submit" value="Remove">
+                                <form action="index.php?page=cart&action=remove_from_cart" method="POST">
+                                    <input type="hidden" name="product_id" value="<?php echo $item['product_id']; ?>">
+                                    <input type="submit" value="Remove" class="remove-btn">
                                 </form>
                             </td>
+
+
                         </tr>
                     <?php endforeach; ?>
                 </table>
@@ -57,7 +61,7 @@
         </div>
     </main>
 
- 
+
 
 
     <?php include 'views/includes/footer.php'; ?>

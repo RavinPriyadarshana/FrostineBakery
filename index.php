@@ -4,6 +4,10 @@ require_once 'controllers/UserController.php';
 require_once 'controllers/ProductController.php';
 require_once 'controllers/StockController.php';
 require_once 'controllers/CashierController.php';
+require_once 'controllers/CartController.php';
+require_once 'controllers/OrderController.php';
+require_once 'controllers/ContactController.php';
+require_once 'controllers/BranchManagerController.php';
 
 // Handle the request (simple routing logic)
 $page = $_GET['page'] ?? 'home';
@@ -57,29 +61,65 @@ switch ($page) {
         break;
 
 
-
     case 'cart':
-        require_once 'controllers/CartController.php';
         $cartController = new CartController();
-        $cartController->viewCart();
+
+        if (isset($_GET['action'])) {
+            switch ($_GET['action']) {
+                case 'add_to_cart':
+                    $cartController->addToCart();
+                    break;
+                case 'remove_from_cart':
+                    $cartController->removeFromCart();
+                    break;
+                case 'update_cart':
+                    $cartController->updateCart();
+                    break;
+                case 'clear_cart':
+                    $cartController->clearCart();
+                    break;
+                default:
+                    $cartController->viewCart();
+                    break;
+            }
+        } else {
+            $cartController->viewCart();
+        }
+
+
+
+        // case 'cart':
+        //     require_once 'controllers/CartController.php';
+        //     $cartController = new CartController();
+        //     $cartController->viewCart();
+        //     break;
+
+
+        // case 'add_to_cart': // Route for adding items to cart
+        //     require_once 'controllers/CartController.php';
+        //     $cartController = new CartController();
+        //     $cartController->addToCart();
+        //     break;
+
+        // case 'remove_from_cart': // Route for removing items from cart
+        //     require_once 'controllers/CartController.php';
+        //     $cartController = new CartController();
+        //     $cartController->removeFromCart();
+        //     break;
+
+
+    case 'order':
+        $orderController = new OrderController();
+        if ($action === 'confirm') {
+            $orderController->confirmOrder();
+        } elseif ($action === 'success') {
+            require 'views/order_success.php';
+        } else {
+            require 'views/place_order.php';
+        }
         break;
-
-
-    case 'add_to_cart': // Route for adding items to cart
-        require_once 'controllers/CartController.php';
-        $cartController = new CartController();
-        $cartController->addToCart();
-        break;
-
-    case 'remove_from_cart': // Route for removing items from cart
-        require_once 'controllers/CartController.php';
-        $cartController = new CartController();
-        $cartController->removeFromCart();
-        break;
-
 
     case 'my-orders':
-        require_once 'controllers/OrderController.php';
         $orderController = new OrderController();
         $orderController->viewOrders();
         break;
@@ -97,9 +137,19 @@ switch ($page) {
         require_once 'views/home.php';
         break;
 
+    // case 'contact_us':
+    //     require_once 'views/contact_us.php';
+    //     break;
+
     case 'contact_us':
-        require_once 'views/contact_us.php';
+        $contactController = new ContactController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $contactController->submitFeedback();
+        } else {
+            require 'views/contact_us.php';
+        }
         break;
+
 
     // ✅ Product Category Pages
 
@@ -238,17 +288,17 @@ switch ($page) {
 
 
     case 'stock-list':
-        $controller = new ProductController();
-        $controller->showAllStock();
+        $controller = new StockController();
+        $controller->stockList();
         break;
 
     case 'edit-stock':
-        $controller = new ProductController();
+        $controller = new StockController();
         $controller->editStockForm();
         break;
 
     case 'update-stock':
-        $controller = new ProductController();
+        $controller = new StockController();
         $controller->updateStock();
         break;
 
@@ -293,6 +343,11 @@ switch ($page) {
         $controller->addOrderForm();
         break;
 
+    case 'save-order':
+        $controller = new OrderController();  // Initialize CashierController
+        $controller->cashierSaveOrder();  // Call the method to save the order
+        break;
+
     case 'process-payment':
         $controller = new CashierController();
         $controller->processPayment();
@@ -310,6 +365,20 @@ switch ($page) {
         // Update profile information
         $userController = new UserController();
         $userController->updateProfile();
+        break;
+
+    // Branch Manager Fnc
+
+
+    case 'branch-manager-orders':
+        $controller = new BranchManagerController();
+        $controller->showOrderRequestForm();
+        break;
+
+    // Route for saving the order request
+    case 'save-order-request':
+        $controller = new BranchManagerController();
+        $controller->saveOrderRequest();
         break;
 
     // case 'stock_reports':

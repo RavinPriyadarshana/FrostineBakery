@@ -16,36 +16,44 @@
 
         <div class="orders-container">
             <h2>My Orders</h2>
-            <table class="orders-table">
-                <tr>
-                    <th>Order ID</th>
-                    <th>Items</th>
-                    <th>Total Price</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-                <tr>
-                    <td>#1001</td>
-                    <td>Chocolate Cake, French Bread</td>
-                    <td>Rs. 2100</td>
-                    <td><span class="status pending">Pending</span></td>
-                    <td><button class="cancel-btn">Cancel</button></td>
-                </tr>
-                <tr>
-                    <td>#1002</td>
-                    <td>Strawberry Muffin, Croissant</td>
-                    <td>Rs. 1500</td>
-                    <td><span class="status processing">Processing</span></td>
-                    <td><button class="disabled-btn" disabled>Cancel</button></td>
-                </tr>
-                <tr>
-                    <td>#1003</td>
-                    <td>Red Velvet Cake</td>
-                    <td>Rs. 2500</td>
-                    <td><span class="status delivered">Delivered</span></td>
-                    <td><button class="disabled-btn" disabled>Cancel</button></td>
-                </tr>
-            </table>
+            <?php if (empty($orders)): ?>
+                <p>No orders found.</p>
+            <?php else: ?>
+                <table class="orders-table">
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Items</th>
+                        <th>Total Price</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    <?php foreach ($orders as $order): ?>
+                        <tr>
+                            <td>#<?= htmlspecialchars($order['id']) ?></td>
+                            <td>
+                                <?php
+                                $itemNames = array_map(function ($item) {
+                                    return htmlspecialchars($item['name']);
+                                }, $order['items']);
+                                echo implode(', ', $itemNames);
+                                ?>
+                            </td>
+                            <td>Rs. <?= number_format($order['total_price'], 2) ?></td>
+                            <td><span class="status <?= strtolower($order['status']) ?>"><?= ucfirst($order['status']) ?></span></td>
+                            <td>
+                                <?php if ($order['status'] === 'Pending'): ?>
+                                    <form method="POST" action="index.php?page=orders&action=cancel">
+                                        <input type="hidden" name="order_id" value="<?= $order['id'] ?>">
+                                        <button class="cancel-btn" type="submit">Cancel</button>
+                                    </form>
+                                <?php else: ?>
+                                    <button class="disabled-btn" disabled>Cancel</button>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            <?php endif; ?>
         </div>
     </main>
 

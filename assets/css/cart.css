@@ -1,6 +1,7 @@
 /* Styles specific to the Cart Page */
 body.cart-page {
-    background-image: url('../images/background2.jpg'); /* Use background2.jpg */
+    background-image: url('../images/background2.jpg');
+    /* Use background2.jpg */
     background-size: cover;
     background-position: center;
     color: #fff;
@@ -13,7 +14,8 @@ body.cart-page {
 
 
 header {
-    background-color: #783b31; /* Dark background */
+    background-color: #783b31;
+    /* Dark background */
     padding: 15px 50px;
     text-align: center;
     position: relative;
@@ -63,7 +65,8 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: #FFD700; /* Gold hover effect */
+    color: #FFD700;
+    /* Gold hover effect */
 }
 
 .cart-container {
@@ -91,7 +94,8 @@ h2 {
     overflow: hidden;
 }
 
-.cart-table th, .cart-table td {
+.cart-table th,
+.cart-table td {
     padding: 12px;
     border: 1px solid #ddd;
     text-align: center;
@@ -147,6 +151,33 @@ footer {
     padding: 20px 0;
     width: 100%;
     margin-top: auto;
+}
+
+/* Buttons */
+.update-btn {
+    background: rgb(255, 200, 0);
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.update-btn:hover {
+    background: darkred;
+}
+
+.remove-btn {
+    background: red;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.remove-btn:hover {
+    background: darkred;
 }
 
 /* Dropdown Styling */

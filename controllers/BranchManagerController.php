@@ -1,5 +1,6 @@
 <?php
 require_once 'models/User.php';
+require_once 'models/BranchOrderRequest.php';
 
 class BranchManagerController
 {
@@ -46,6 +47,38 @@ class BranchManagerController
         require 'views/branch_manager/customer_list.php';
     }
 
+
+      public function showOrderRequestForm()
+    {
+        // Get the list of products and branches
+        $productModel = new Product();
+        $products = $productModel->getAllProducts();
+
+        $userModel = new User();
+        $branches = $userModel->getAllBranches();
+
+        // Load the view for order request form
+        require 'views/branch_manager/order_request_form.php';
+    }
+
+    // Save the branch order request
+    public function saveOrderRequest()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $productId = $_POST['product_id'];
+            $quantity = $_POST['quantity'];
+            $branchId = $_POST['branch_id'];
+
+            // Create a new BranchOrderRequest model instance and save the order
+            $branchOrderRequestModel = new BranchOrderRequest();
+            $branchOrderRequestModel->createOrderRequest($productId, $quantity, $branchId);
+
+            // Redirect after saving the request
+            header('Location: index.php?page=branch-manager-orders');
+            exit;
+        }
+    }
+
     // View a specific customer's orders
     public function viewCustomerOrders($customerId)
     {
@@ -73,10 +106,5 @@ class BranchManagerController
         print_r($orders);
     }
 
-    public function sendDailyOrders()
-    {
-        $orderModel = new Order();
-        $orders = $orderModel->getDailyOrders(); // Get the daily orders for the branch
-        $this->sendOrdersToHeadOffice($orders);
-    }
+ 
 }

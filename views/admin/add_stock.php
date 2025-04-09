@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Add Stock - Frostine Bakery</title>
   <link rel="stylesheet" href="assets/css/order_items.css">
 </head>
+
 <body>
   <?php include 'views/includes/header.php'; ?>
 
@@ -38,4 +40,5 @@
 
   <?php include 'views/includes/footer.php'; ?>
 </body>
+
 </html>

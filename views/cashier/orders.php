@@ -2,20 +2,21 @@
 <html lang="en">
 
 <head>
+    <link rel="stylesheet" href="assets/css/footer.css">
     <meta charset="UTF-8">
     <title>Orders - Frostine Bakery</title>
     <link rel="stylesheet" href="assets/css/orders.css">
-
+    <link rel="icon" href="assets/images/logo.jpg">
 </head>
 
-<body>
+<body class="orders-page">
     <?php include 'views/includes/header.php'; ?>
 
     <main>
-        <div class="order-container">
+        <div class="orders-container">
             <h2>Orders</h2>
             <a href="index.php?page=add-order" class="btn">Add New Order</a>
-            <table>
+            <table class="orders-table">
                 <tr>
                     <th>Order ID</th>
                     <th>Customer</th>
@@ -23,7 +24,6 @@
                     <th>Status</th>
                     <th>Total Price</th>
                     <th>Created At</th>
-                    <th>Actions</th>
                 </tr>
                 <?php if (isset($orders) && !empty($orders)): ?>
                     <?php foreach ($orders as $order): ?>
@@ -35,7 +35,6 @@
                             <td><?= htmlspecialchars($order['total_price']) ?> LKR</td>
                             <td><?= htmlspecialchars($order['created_at']) ?></td>
                             <td>
-                                <a href="index.php?page=add-order&id=<?= $order['id'] ?>">Pay</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

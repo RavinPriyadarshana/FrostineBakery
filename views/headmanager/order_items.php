@@ -35,7 +35,7 @@
                             <td><?= htmlspecialchars($item['customer_name']) ?></td>
                             <td><?= htmlspecialchars($item['product_name']) ?></td>
                             <td><?= htmlspecialchars($item['quantity']) ?></td>
-                            <td><?= htmlspecialchars($item['order_date']) ?></td>
+                            <td><?= htmlspecialchars($item['created_at']) ?></td>
                             <td><?= htmlspecialchars($item['status']) ?></td>
                         </tr>
                     <?php endforeach; ?>

@@ -1,16 +1,21 @@
-body {
-    background-image: url('assets/images/background2.jpg');
+body.users-page {
+    background-image: url('../images/background2.jpg');
     background-size: cover;
     background-position: center;
     color: #fff;
-    font-family: Arial, sans-serif;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
 }
 
 
 header {
-    background-color: #783b31; /* Dark background */
-    padding: 15px 50px; /* Padding for spacing */
+    background-color: #783b31;
+    /* Dark background */
+    padding: 15px 50px;
+    /* Padding for spacing */
     text-align: center;
     position: relative;
 }
@@ -38,7 +43,8 @@ header {
 
 header .logo-container h1 {
     font-size: 32px;
-    color: orange; /* Orange/yellow color */
+    color: orange;
+    /* Orange/yellow color */
     font-weight: bold;
     text-align: center;
     margin: 0;
@@ -59,7 +65,8 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: #FFD700; /* Gold hover effect */
+    color: #FFD700;
+    /* Gold hover effect */
 }
 
 .auth-buttons {
@@ -70,14 +77,16 @@ nav ul li a:hover {
 .auth-buttons a {
     text-decoration: none;
     color: white;
-    background-color: orange; /* Red buttons */
+    background-color: orange;
+    /* Red buttons */
     padding: 8px 16px;
     border-radius: 5px;
     font-weight: bold;
 }
 
 .auth-buttons a:hover {
-    background-color: #FFD700; /* Lighter red on hover */
+    background-color: #FFD700;
+    /* Lighter red on hover */
     color: black;
 }
 
@@ -87,15 +96,18 @@ main {
     background-position: center;
     color: #fff;
     padding: 50px 0;
-    flex: 1; /* Ensures the main content takes up the remaining space */
+    flex: 1;
+    /* Ensures the main content takes up the remaining space */
 }
 
 .user-container {
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 30px;
     background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 15px;
+    padding: 40px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 800px;
+    margin: 40px auto;
+    text-align: center;
 }
 
 .user-container h2 {
@@ -110,7 +122,8 @@ table {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-th, td {
+th,
+td {
     padding: 12px 15px;
     text-align: left;
     color: #fff;
@@ -130,6 +143,7 @@ h2 {
     font-size: 32px;
     margin-bottom: 20px;
 }
+
 
 input[type="text"],
 input[type="email"],
@@ -168,6 +182,7 @@ input[type="submit"]:hover {
     background-color: #783b31;
 }
 
+
 footer {
     background-color: #783b31;
     color: #ccc;
@@ -197,7 +212,8 @@ header nav ul li a {
 }
 
 header nav ul li a:hover {
-    color: #FFD700; /* Gold hover effect */
+    color: #FFD700;
+    /* Gold hover effect */
 }
 
 /* Dropdown Button */
@@ -218,7 +234,8 @@ header nav ul li a:hover {
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f5f0e1; /* Light beige */
+    background-color: #f5f0e1;
+    /* Light beige */
     min-width: 160px;
     z-index: 1;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
@@ -244,4 +261,3 @@ header nav ul li a:hover {
 .dropdown:hover .dropbtn {
     background-color: #666;
 }
-

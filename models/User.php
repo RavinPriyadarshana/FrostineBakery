@@ -130,4 +130,33 @@ class User
         return $stmt->fetchAll();
     }
 
+    public function getCashiers()
+    {
+        $stmt = $this->db->query("SELECT * FROM users WHERE role = 'Cashier'");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteUser($id)
+    {
+        $stmt = $this->db->prepare("DELETE FROM users WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function getOrdersByCustomer($customerId)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM orders WHERE customer_id = :customer_id");
+        $stmt->bindParam(':customer_id', $customerId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getDailyOrders()
+    {
+        $today = date('Y-m-d'); // Get today's date in Y-m-d format
+        $stmt = $this->db->prepare("SELECT * FROM orders WHERE DATE(order_date) = :today");
+        $stmt->bindParam(':today', $today, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

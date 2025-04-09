@@ -41,14 +41,22 @@
             <?php echo json_encode($product["image"]) ?>
         )'>View Details</button>
 
-                            <button class="add-to-cart-btn"
+                            <!-- <button class="add-to-cart-btn"
                                 onclick='addToCart(
         <?php echo json_encode($product["id"]) ?>,
         <?php echo json_encode($product["name"]) ?>,
         <?php echo json_encode($product["price"]) ?>
     )'>
                                 Add to Cart
-                            </button>
+                            </button> -->
+
+
+                            <form method="POST" action="index.php?page=cart&action=add_to_cart">
+                                <input type="hidden" name="id" value="<?= $product['id']; ?>">
+                                <input type="hidden" name="name" value="<?= htmlspecialchars($product['name']); ?>">
+                                <input type="hidden" name="price" value="<?= $product['price']; ?>">
+                                <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+                            </form>
 
                         </div>
                     <?php endforeach; ?>

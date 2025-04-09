@@ -1,24 +1,21 @@
 <?php
-class Contact {
+class Contact
+{
 
-    private $pdo;
+    private $db;
 
-    public function __construct($pdo) {
-        $this->pdo = $pdo;
+    public function __construct()
+    {
+        global $pdo;
+        $this->db = $pdo;
     }
 
-    public function saveContactDetails($name, $email, $phone, $message) {
-        // Prepare the SQL statement to insert the contact details
-        $sql = "INSERT INTO feedback (name, email, phone, message) VALUES (?, ?, ?, ?)";
-        $stmt = $this->pdo->prepare($sql);
+    public function saveFeedback($userId, $name, $email, $phone, $message)
+    {
+        $status = 'Pending';
 
-        // Execute the query with user data
-        try {
-            $stmt->execute([$name, $email, $phone, $message]);
-            return true; // Data inserted successfully
-        } catch (Exception $e) {
-            // Handle any errors here
-            return false;
-        }
+        $stmt = $this->db->prepare("INSERT INTO feedback (customer_id, status, message, created_at) VALUES (?, ?, ?, ?)");
+        return $stmt->execute([$userId, $status, $message, date('Y-m-d')]);
+
     }
 }

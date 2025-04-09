@@ -13,7 +13,7 @@
     <?php include 'views/includes/header.php'; ?>
 
     <main>
-        <div class="form-container">
+    <div class="order-container">
             <h2>Edit Employee</h2>
             <form method="POST" action="index.php?page=update-employee">
                 <input type="hidden" name="id" value="<?= $employee['id'] ?>">

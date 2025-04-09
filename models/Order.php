@@ -72,6 +72,7 @@ class Order
             SELECT 
                 o.id AS order_id,
                 o.status,
+                o.created_at,
                 u.name AS customer_name,
                 p.name AS product_name,
                 oi.quantity
@@ -106,10 +107,10 @@ class Order
     // Get items of an order
     public function getOrderItems($orderId)
     {
-        $stmt = $this->db->prepare("SELECT order_items.id, products.name, order_items.quantity, order_items.price
-                                   FROM order_items
-                                   JOIN products ON order_items.product_id = products.id
-                                   WHERE order_items.order_id = ?");
+        $stmt = $this->db->prepare("SELECT order_items.*, products.name 
+        FROM order_items 
+        INNER JOIN products ON order_items.product_id = products.id 
+        WHERE order_items.order_id = ?");
         $stmt->execute([$orderId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -138,10 +139,11 @@ class Order
         return $stmt->fetchAll();
     }
 
+    
     // Create a new order
-    public function createOrder($customer_id)
+    public function createOrder($customer_id, $price, $branch)
     {
-        $stmt = $this->db->prepare("INSERT INTO orders (customer_id, status, total_price, created_at) VALUES (?, 'pending', 0, NOW())");
+        $stmt = $this->db->prepare("INSERT INTO orders (customer_id, branch_id, status, total_price,created_at) VALUES ($customer_id, $branch, 'pending', $price, now())");
         $stmt->execute([$customer_id]);
 
         // Return the ID of the newly created order
@@ -165,4 +167,12 @@ class Order
         $stmt = $this->db->prepare("UPDATE orders SET total_price = total_price + ? WHERE id = ?");
         $stmt->execute([$price * $quantity, $order_id]);
     }
+
+    public function getCustomerOrders($customerId)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM orders WHERE customer_id = ? ORDER BY created_at DESC");
+        $stmt->execute([$customerId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
 }

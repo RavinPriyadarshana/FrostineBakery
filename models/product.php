@@ -35,7 +35,7 @@ class Product
     public function findById($id)
     {
         $stmt = $this->db->prepare(
-            "SELECT s.id, s.product_id, p.name AS product_name, s.branch_id, b.name AS branch_name, s.quantity 
+            "SELECT s.id, s.product_id, p.name AS product_name, p.price AS price, s.branch_id, b.name AS branch_name, s.quantity 
             FROM stock s
             JOIN products p ON s.product_id = p.id
             JOIN branches b ON s.branch_id = b.id
@@ -57,5 +57,11 @@ class Product
     {
         $stmt = $this->db->prepare("INSERT INTO products (name, description, price, category, image) VALUES (?, ?, ?, ?, ?)");
         $stmt->execute([$name, $description, $price, $category, $image]);
+    }
+
+    public function getAllProducts()
+    {
+        $stmt = $this->db->query("SELECT * FROM products");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

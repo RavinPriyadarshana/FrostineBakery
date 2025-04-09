@@ -4,11 +4,27 @@ require_once "models/Order.php";
 class OrderController
 {
 
+    private $db;
+
+    public function __construct()
+    {
+        global $pdo;
+        $this->db = $pdo;
+    }
 
     public function viewOrders()
     {
-        // $cartItems = Cart::getCartItems();
-        require "views/orders.php";
+        $customerId = $_SESSION['user_id']; // assuming logged in user is customer
+        $orderModel = new Order();
+
+        $orders = $orderModel->getCustomerOrders($customerId);
+
+        // For each order, get items
+        foreach ($orders as &$order) {
+            $order['items'] = $orderModel->getOrderItems($order['id']);
+        }
+
+        require 'views/orders.php';
     }
 
     public function salesReport()
@@ -43,6 +59,7 @@ class OrderController
         // require 'views/headmanager/stock_report.php';
     }
 
+    //For headmanager
     public function orderItems()
     {
         require_once 'models/Order.php';
@@ -84,5 +101,76 @@ class OrderController
             exit();
         }
     }
-    
+
+    public function confirmOrder()
+    {
+        $userId = $_SESSION['user_id'];
+        $cardName = $_POST['card_name'];
+        $cardNumber = $_POST['card_number'];
+        $expiryDate = $_POST['expiry_date'];
+        $cvv = $_POST['cvv'];
+
+        $cartModel = new Cart();
+        $cartItems = $cartModel->getCartItems($userId);
+        $totalPrice = $cartModel->getTotalPrice($userId);
+
+        if (empty($cartItems)) {
+            echo "Cart is empty.";
+            return;
+        }
+
+        // Save card info (for now, into a simple table called `payments`)
+        $stmt = $this->db->prepare("INSERT INTO payments (user_id, card_name, card_number, expiry_date, cvv) VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute([$userId, $cardName, $cardNumber, $expiryDate, $cvv]);
+
+        // Insert into orders
+        $stmt = $this->db->prepare("INSERT INTO orders (customer_id, branch_id, status, total_price, created_at) VALUES (?, ?, ?, ?, NOW())");
+        $stmt->execute([$userId, 1, 'Pending', $totalPrice]);
+        $orderId = $this->db->lastInsertId();
+
+        // Insert into order_items
+        foreach ($cartItems as $item) {
+            $stmt = $this->db->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$orderId, $item['product_id'], $item['quantity'], $item['price']]);
+        }
+
+        // Clear cart
+        $stmt = $this->db->prepare("DELETE FROM cart WHERE user_id = ?");
+        $stmt->execute([$userId]);
+
+        // Redirect to order success
+        header("Location: index.php?page=order&action=success");
+    }
+
+    public function cashierSaveOrder()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Fetch the form data
+            $customerId = $_POST['customer_id'];
+            $productId = $_POST['product_id'];
+            $quantity = $_POST['quantity'];
+            $branch = $_POST['branch_id'];
+
+            // Calculate the total price
+            $productModel = new Product();
+            $product = $productModel->findById($productId);
+            $totalPrice = $product['price'] * $quantity;
+
+            // Insert the order into the 'orders' table
+            $orderModel = new Order();
+            $orderId = $orderModel->createOrder($customerId, $totalPrice, $branch);
+
+            // Insert the order items into the 'order_items' table
+            $orderItemModel = new Order();
+            $orderItemModel->addOrderItem($orderId, $productId, $quantity, $product['price']);
+
+            // Optionally: Update the stock (if necessary)
+            $stockModel = new Stock();
+            $stockModel->updateStockQuantity($productId, $quantity);
+
+            // Redirect to the orders list page
+            header('Location: index.php?page=orders');
+            exit;
+        }
+    }
 }

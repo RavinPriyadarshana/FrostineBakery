@@ -15,10 +15,13 @@ class CashierController
     public function addOrderForm()
     {
         $orderModel = new Order();
-        $orderId = $_GET['id'];
-        $order = $orderModel->getOrderById($orderId);
-        $orderItems = $orderModel->getOrderItems($orderId);
-        require 'views/cashier/add_order.php'; // View where cashier can process payment
+        $userModel = new User();
+        $productModel = new Product();
+        $branches = $userModel->getAllBranches(); 
+        $customers = $userModel->getCustomers();
+
+        $products = $productModel->getAllProducts();
+        require 'views/cashier/add_order.php';
     }
 
     // Handle order payment

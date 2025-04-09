@@ -28,7 +28,27 @@ class UserController
                 $_SESSION["user"] = $user;
                 $_SESSION["user_role"] = $user['role'];
                 $_SESSION["user_id"] = $user['id'];
-                header("Location: index.php?page=dashboard");
+
+                switch ($user['role']) {
+                    case 'admin':
+                        header("Location: index.php?page=admin-dashboard");
+                        break;
+                    case 'headmanager':
+                        header("Location: index.php?page=headmanager-dashboard");
+                        break;
+                    case 'cashier':
+                        header("Location: index.php?page=cashier-dashboard");
+                        break;
+                    case 'branchmanager':
+                        header("Location: index.php?page=branchmanager-dashboard");
+                        break;
+                    case 'customer':
+                        header("Location: index.php?page=customer-dashboard");
+                        break;
+                    default:
+                        header("Location: index.php?page=home"); // fallback
+                        break;
+                }
                 exit;
             } else {
                 $error = "Invalid credentials.";

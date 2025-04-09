@@ -26,18 +26,17 @@ class CartController
         $userId = $_SESSION['user_id'];
         $cart = new Cart();
 
-        $cartItems = $cart->getCart($userId);
+        $cartItems = $cart->getCartItems($userId);
         $totalPrice = $cart->getTotalPrice($userId);
 
         require "views/cart.php";
     }
 
-    // Remove item from cart
     public function removeFromCart()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $productId = $_POST['product_id'];
-            $userId = $_SESSION['user_id'];
+            $userId = $_SESSION['user_id']; // Ensure this session exists
 
             $cart = new Cart();
             $cart->removeFromCart($userId, $productId);
@@ -47,16 +46,15 @@ class CartController
         }
     }
 
-    // Update item quantity
     public function updateCart()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $productId = $_POST['product_id'];
             $quantity = $_POST['quantity'];
-            $userId = $_SESSION['user_id'];
+            $userId = $_SESSION['user_id']; // Ensure this session exists
 
             $cart = new Cart();
-            $cart->updateCart($userId, $productId, $quantity);
+            $cart->updateQuantity($userId, $productId, $quantity);
 
             header("Location: index.php?page=cart");
             exit();

@@ -11,7 +11,7 @@
     <?php include 'views/includes/header.php'; ?>
 
     <main>
-        <div class="stock-container">
+        <div class="order-container">
             <h2>Stock Items</h2>
             <a href="index.php?page=add-stock" class="btn">Add Stock</a>
             <table>

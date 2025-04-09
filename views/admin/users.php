@@ -9,7 +9,7 @@
   <link rel="icon" href="assets/images/logo.jpg">
 </head>
 
-<body>
+<body class="users-page">
   <?php include 'views/includes/header.php'; ?>
 
   <main>

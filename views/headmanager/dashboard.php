@@ -44,6 +44,14 @@
                 <p>View or update your profile details.</p>
                 <a href="index.php?page=profile">Profile</a>
             </div>
+
+
+            <div class="card">
+                <h3>Request Orders</h3>
+                <p>Request Orders.</p>
+                <a href="index.php?page=branch-manager-orders">Request</a>
+            </div>
+
         </div>
     </main>
 
