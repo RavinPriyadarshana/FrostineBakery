@@ -1,16 +1,19 @@
 <?php
 require_once __DIR__ . '/../config/database.php';
 
-class User {
+class User
+{
     private $db;
 
-    public function __construct() {
+    public function __construct()
+    {
         global $pdo;
         $this->db = $pdo;
     }
 
     // Save new user
-    public function save($name, $username, $email, $phone, $password) {
+    public function save($name, $username, $email, $phone, $password)
+    {
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         $stmt = $this->db->prepare("INSERT INTO users (name, username, email, phone, password, branch_id, role) 
                                     VALUES (?, ?, ?, ?, ?, NULL, NULL)");
@@ -18,7 +21,8 @@ class User {
     }
 
     // User login
-    public function login($username, $password) {
+    public function login($username, $password)
+    {
         $stmt = $this->db->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
         $stmt->execute([$username, $username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -31,26 +35,99 @@ class User {
     }
 
     // Check if username/email already exists
-    public function userExists($username) {
+    public function userExists($username)
+    {
         $stmt = $this->db->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
         $stmt->execute([$username, $username]);
         return $stmt->fetch() ? true : false;
     }
 
     // Get all users
-    public function getAll() {
+    public function getAll()
+    {
         return [
             ["id" => 1, "name" => "Alice", "email" => "alice@mail.com"],
             ["id" => 2, "name" => "Bob", "email" => "bob@mail.com"]
         ];
     }
 
-    public function getById($id) {
-        return ["id" => $id, "name" => "Example", "email" => "user@example.com"];
+    public function getById($id)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function delete($id) {
-        // Simulated deletion
+    public function updateEmployee($id, $name, $username, $email, $phone, $role, $branch_id)
+    {
+        $stmt = $this->db->prepare("UPDATE users SET name = ?, username = ?, email = ?, phone = ?, role = ?, branch_id = ? WHERE id = ?");
+        $stmt->execute([$name, $username, $email, $phone, $role, $branch_id, $id]);
     }
+
+
+    public function delete($id)
+    {
+        $stmt = $this->db->prepare("DELETE FROM users WHERE id = ?");
+        $stmt->execute([$id]);
+    }
+
+    public function getEmployees()
+    {
+        $stmt = $this->db->prepare("SELECT id, name, email, role, username, phone FROM users WHERE role IS NOT NULL AND branch_id IS NOT NULL");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getCustomers()
+    {
+        $stmt = $this->db->prepare("SELECT id, name, email, role, username, phone FROM users WHERE role IS NULL AND branch_id IS NULL");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getCustomerFeedbacks()
+    {
+        $stmt = $this->db->prepare("SELECT * FROM feedback");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Update feedback status
+    public function updateFeedbackStatus($id, $status)
+    {
+        $stmt = $this->db->prepare("UPDATE feedback SET status = ? WHERE id = ?");
+        return $stmt->execute([$status, $id]);
+    }
+
+
+    public function saveWithRole($name, $username, $email, $phone, $password, $role, $branch_id)
+    {
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        $stmt = $this->db->prepare("INSERT INTO users (name, username, email, phone, password, role, branch_id)
+                                VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$name, $username, $email, $phone, $hashedPassword, $role, $branch_id]);
+    }
+
+
+    // Get user by ID
+    public function getUserById($userId)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt->execute([$userId]);
+        return $stmt->fetch();
+    }
+
+    // Update user details
+    public function updateUser($userId, $name, $email, $phone, $password, $branch_id)
+    {
+        $stmt = $this->db->prepare("UPDATE users SET name = ?, email = ?, phone = ?, password = ?, branch_id = ? WHERE id = ?");
+        $stmt->execute([$name, $email, $phone, $password, $branch_id, $userId]);
+    }
+
+    public function getAllBranches()
+    {
+        $stmt = $this->db->prepare("SELECT * FROM branches");
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
 }
-?>

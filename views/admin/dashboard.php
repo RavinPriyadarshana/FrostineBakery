@@ -15,40 +15,57 @@
     <main>
         <div class="dashboard-container">
             <div class="card">
-                <h3>Sales Reports</h3>
-                <p>View overall sales performance.</p>
-                <a href="index.php?page=sales_reports">View Report</a>
-            </div>
-            <div class="card">
-                <h3>Stock Reports</h3>
-                <p>Monitor bakery inventory and stock levels.</p>
-                <a href="index.php?page=stock_reports">View Stock</a>
-            </div>
-            <div class="card">
-                <h3>Items</h3>
-                <p>Check order details and items ordered.</p>
-                <a href="index.php?page=order_items">View Orders</a>
-            </div>
-            <div class="card">
-                <h3>Employee Management</h3>
-                <p>Manage employee accounts and roles.</p>
-                <a href="index.php?page=employees">Manage</a>
-            </div>
-            <div class="card">
-                <h3>Customer Requests</h3>
-                <p>Review and respond to customer queries.</p>
-                <a href="index.php?page=customer_requests">View Requests</a>
-            </div>
-            <div class="card">
-                <h3>User Profile</h3>
-                <p>View or update your profile details.</p>
-                <a href="index.php?page=profile">Profile</a>
+                <h3>View Profile</h3>
+                <p>View and manage your admin profile.</p>
+                <a href="index.php?page=admin_profile">My Profile</a>
             </div>
 
             <div class="card">
-                <h3>Users</h3>
-                <p>View or update your profile details.</p>
-                <a href="index.php?page=user-list">View</a>
+                <h3>User Profile Management</h3>
+                <p>Update your user account details.</p>
+                <a href="index.php?page=user_profile">Update Profile</a>
+            </div>
+
+            <div class="card">
+                <h3>Employee Management</h3>
+                <p>Manage employee records (add/edit/delete).</p>
+                <a href="index.php?page=employee-list">Manage Employees</a>
+            </div>
+
+            <div class="card">
+                <h3>Customer Management</h3>
+                <p>Manage customer records (add/edit/delete).</p>
+                <a href="index.php?page=customer-list">Manage Customers</a>
+            </div>
+
+            <div class="card">
+                <h3>Stock Report</h3>
+                <p>Monitor and update stock levels.</p>
+                <a href="index.php?page=stock_reports">Stock Report</a>
+            </div>
+
+            <div class="card">
+                <h3>Update Stock</h3>
+                <p>Manually update available stock quantities.</p>
+                <a href="index.php?page=stock-list">Update Stock</a>
+            </div>
+
+            <div class="card">
+                <h3>Sales Reports</h3>
+                <p>Analyze overall sales performance.</p>
+                <a href="index.php?page=sales_reports">Sales Report</a>
+            </div>
+
+            <div class="card">
+                <h3>Order Items</h3>
+                <p>Check ordered items and statuses.</p>
+                <a href="index.php?page=order_items">View Orders</a>
+            </div>
+
+            <div class="card">
+                <h3>Customer Requests</h3>
+                <p>Respond to customer messages and requests.</p>
+                <a href="index.php?page=customer_requests">View Requests</a>
             </div>
 
         </div>

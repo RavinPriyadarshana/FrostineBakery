@@ -25,35 +25,42 @@
                         <th>Message</th>
                         <th>Date</th>
                         <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>REQ101</td>
-                        <td>Amasha Vidumani</td>
-                        <td>amasha@example.com</td>
-                        <td>I need a custom cake for a birthday.</td>
-                        <td>2025-04-01</td>
-                        <td>Pending</td>
-                    </tr>
-                    <tr>
-                        <td>REQ102</td>
-                        <td>Kavindu Nimesh</td>
-                        <td>kavindu@example.com</td>
-                        <td>Do you deliver outside Colombo?</td>
-                        <td>2025-04-02</td>
-                        <td>Responded</td>
-                    </tr>
-                    <tr>
-                        <td>REQ103</td>
-                        <td>Sachini Perera</td>
-                        <td>sachini@example.com</td>
-                        <td>Can I get gluten-free cupcakes?</td>
-                        <td>2025-04-03</td>
-                        <td>Resolved</td>
-                    </tr>
+                    <?php if (isset($feedbacks) && count($feedbacks) > 0): ?>
+                        <?php foreach ($feedbacks as $fb): ?>
+                            <tr>
+                                <td>REQ<?= htmlspecialchars($fb['id']) ?></td>
+                                <td><?= htmlspecialchars($fb['customer_name']) ?></td>
+                                <td><?= htmlspecialchars($fb['email']) ?></td>
+                                <td><?= htmlspecialchars($fb['message']) ?></td>
+                                <td><?= htmlspecialchars($fb['created_at']) ?></td>
+                                <td><?= htmlspecialchars($fb['status']) ?></td>
+                                <td>
+                                    <form method="POST" action="index.php?page=update_feedback_status" style="display:inline;">
+                                        <input type="hidden" name="feedback_id" value="<?= $fb['id'] ?>">
+                                        <input type="hidden" name="status" value="Responded">
+                                        <button type="submit">Mark Responded</button>
+                                    </form>
+                                    <form method="POST" action="index.php?page=update_feedback_status" style="display:inline;">
+                                        <input type="hidden" name="feedback_id" value="<?= $fb['id'] ?>">
+                                        <input type="hidden" name="status" value="Resolved">
+                                        <button type="submit">Mark Resolved</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="7">No feedbacks found.</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
+
             </table>
+
         </div>
     </main>
 

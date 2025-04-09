@@ -21,37 +21,31 @@
                 <input type="submit" value="Generate Report">
             </form>
 
-            <!-- Hardcoded sample results table -->
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Product</th>
-                        <th>Quantity Sold</th>
-                        <th>Total Revenue</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>2025-04-01</td>
-                        <td>Chocolate Bread</td>
-                        <td>40</td>
-                        <td>LKR 8,000</td>
-                    </tr>
-                    <tr>
-                        <td>2025-04-02</td>
-                        <td>Banana Muffins</td>
-                        <td>25</td>
-                        <td>LKR 5,000</td>
-                    </tr>
-                    <tr>
-                        <td>2025-04-03</td>
-                        <td>Butter Croissants</td>
-                        <td>35</td>
-                        <td>LKR 7,000</td>
-                    </tr>
-                </tbody>
-            </table>
+            <?php if (!empty($stocks)): ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Total Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($stocks as $stock): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($stock['stock_date']) ?></td>
+                                <td><?= htmlspecialchars($stock['product_name']) ?></td>
+                                <td><?= htmlspecialchars($stock['quantity']) ?></td>
+                                <td>LKR <?= number_format($stock['quantity'] * $stock['price'], 2) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php elseif ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
+                <p>No stock records found for the selected date range.</p>
+            <?php endif; ?>
+
         </div>
     </main>
 

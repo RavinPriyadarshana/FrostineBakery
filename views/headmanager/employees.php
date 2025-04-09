@@ -2,11 +2,17 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employees - Frostine Bakery</title>
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="assets/css/employees.css">
     <link rel="icon" href="assets/images/logo.jpg">
+    <style>
+        .table-responsive {
+            overflow-x: auto;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
@@ -15,45 +21,31 @@
     <main>
         <div class="employee-container">
             <h2>Employees</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Emp Number</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($employees as $emp): ?>
+                            <tr>
+                                <td><?= 'EMP' . str_pad($emp['id'], 3, '0', STR_PAD_LEFT) ?></td>
+                                <td><?= htmlspecialchars($emp['name']) ?></td>
+                                <td><?= htmlspecialchars($emp['email']) ?></td>
+                                <td><?= htmlspecialchars($emp['phone']) ?></td>
+                                <td>Active</td> <!-- You can customize this status as needed -->
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Request ID</th>
-                        <th>Customer Name</th>
-                        <th>Email</th>
-                        <th>Message</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>REQ101</td>
-                        <td>Amasha Vidumani</td>
-                        <td>amasha@example.com</td>
-                        <td>I need a custom cake for a birthday.</td>
-                        <td>2025-04-01</td>
-                        <td>Pending</td>
-                    </tr>
-                    <tr>
-                        <td>REQ102</td>
-                        <td>Kavindu Nimesh</td>
-                        <td>kavindu@example.com</td>
-                        <td>Do you deliver outside Colombo?</td>
-                        <td>2025-04-02</td>
-                        <td>Responded</td>
-                    </tr>
-                    <tr>
-                        <td>REQ103</td>
-                        <td>Sachini Perera</td>
-                        <td>sachini@example.com</td>
-                        <td>Can I get gluten-free cupcakes?</td>
-                        <td>2025-04-03</td>
-                        <td>Resolved</td>
-                    </tr>
-                </tbody>
-            </table>
+                </table>
+            </div>
         </div>
     </main>
 

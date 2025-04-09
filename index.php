@@ -1,6 +1,9 @@
 <?php
 session_start();
 require_once 'controllers/UserController.php';
+require_once 'controllers/ProductController.php';
+require_once 'controllers/StockController.php';
+require_once 'controllers/CashierController.php';
 
 // Handle the request (simple routing logic)
 $page = $_GET['page'] ?? 'home';
@@ -101,7 +104,6 @@ switch ($page) {
     // ✅ Product Category Pages
 
     case 'category':
-        require_once 'controllers/ProductController.php';
         $controller = new ProductController();
         $controller->showCategory($_GET['type'] ?? 'bread'); // default to bread
         break;
@@ -136,21 +138,51 @@ switch ($page) {
         require_once 'views/headmanager/sales_report.php';
         break;
 
+    case 'sales_report':
+        require_once 'controllers/OrderController.php';
+        $controller = new OrderController();
+        $controller->salesReport();
+        break;
+
 
     case 'stock_reports':
         require_once 'views/headmanager/stock_report.php';
         break;
 
-    case 'order_items':
-        require_once 'views/headmanager/order_items.php';
+    case 'stock_report':
+        require_once 'controllers/OrderController.php';
+        $controller = new OrderController();
+        $controller->stockReport();
         break;
+
+
+    case 'order_items':
+        require_once 'controllers/OrderController.php';
+        $controller = new OrderController();
+        $controller->orderItems();
+        break;
+
 
     case 'customer_requests':
         require_once 'views/headmanager/customer_requests.php';
         break;
 
     case 'employees':
-        require_once 'views/headmanager/employees.php';
+        require_once 'controllers/UserController.php';
+        $controller = new UserController();
+        $controller->employees();
+        break;
+
+    case 'customer_feedbacks':
+        require_once 'controllers/UserController.php';
+        $controller = new UserController();
+        $controller->showCustomerFeedbacks();
+        break;
+
+    case 'update_feedback_status':
+        require_once 'controllers/UserController.php';
+        $controller = new UserController();
+        $controller->updateFeedbackStatus();
         break;
 
     //Admin func
@@ -159,9 +191,132 @@ switch ($page) {
         require_once 'views/admin/dashboard.php';
         break;
 
-    case 'user-list':
-        require_once 'views/admin/users.php';
+    case 'employee-list':
+        $controller = new UserController();
+        $controller->employees();
         break;
+
+    case 'customer-list':
+        $controller = new UserController();
+        $controller->customers();
+        break;
+
+    case 'add-employee':
+        $controller = new UserController();
+        $controller->addEmployeeForm();
+        break;
+
+    case 'save-employee':
+        $controller = new UserController();
+        $controller->saveEmployee();
+        break;
+
+    case 'delete-employee':
+        $controller = new UserController();
+        $controller->deleteEmployee();
+        break;
+
+    case 'edit-employee':
+        $controller = new UserController();
+        $controller->editEmployeeForm();
+        break;
+
+    case 'update-employee':
+        $controller = new UserController();
+        $controller->updateEmployee();
+        break;
+
+    case 'delete-employee':
+        $controller = new UserController();
+        $controller->deleteEmployee();
+        break;
+
+    case 'delete-customer':
+        $controller = new UserController();
+        $controller->deleteCustomer();
+        break;
+
+
+    case 'stock-list':
+        $controller = new ProductController();
+        $controller->showAllStock();
+        break;
+
+    case 'edit-stock':
+        $controller = new ProductController();
+        $controller->editStockForm();
+        break;
+
+    case 'update-stock':
+        $controller = new ProductController();
+        $controller->updateStock();
+        break;
+
+
+    case 'add-product':
+        $controller = new ProductController();
+        $controller->addProductForm();
+        break;
+
+    case 'save-product':
+        $controller = new ProductController();
+        $controller->saveProduct();
+        break;
+
+    // Add stock form
+    case 'add-stock':
+        $controller = new StockController();
+        $controller->addStockForm();
+        break;
+
+    // Save stock for product
+    case 'save-stock':
+        $controller = new StockController();
+        $controller->saveStock();
+        break;
+
+
+    // Cashier func
+
+
+    case 'cashier':
+        require_once 'views/cashier/dashboard.php';
+        break;
+
+    case 'orders':
+        $controller = new CashierController();
+        $controller->showOrders();
+        break;
+
+    case 'add-order':
+        $controller = new CashierController();
+        $controller->addOrderForm();
+        break;
+
+    case 'process-payment':
+        $controller = new CashierController();
+        $controller->processPayment();
+        break;
+
+
+
+    case 'profile':
+        // Show profile page
+        $userController = new UserController();
+        $userController->profile();
+        break;
+
+    case 'update-profile':
+        // Update profile information
+        $userController = new UserController();
+        $userController->updateProfile();
+        break;
+
+    // case 'stock_reports':
+    //     include 'controllers/OrderController.php';
+    //     $controller = new OrderController();
+    //     $controller->showStockReport();
+    //     break;
 
     // ✅ Fallback
     default:

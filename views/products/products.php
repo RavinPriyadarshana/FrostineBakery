@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -36,13 +35,18 @@
                             <p class="product-price"><?= $product['price']; ?></p>
                             <button class="view-details-btn"
                                 onclick='showModal(
-            <?= json_encode($product["name"]) ?>,
-            <?= json_encode($product["description"]) ?>,
-            <?= json_encode($product["price"]) ?>,
-            <?= json_encode($product["image"]) ?>
+            <?php echo json_encode($product["name"]) ?>,
+            <?php echo json_encode($product["description"]) ?>,
+            <?php echo json_encode($product["price"]) ?>,
+            <?php echo json_encode($product["image"]) ?>
         )'>View Details</button>
 
-                            <button class="add-to-cart-btn" onclick="addToCart(<?= $product['id']; ?>, '<?= $product['name']; ?>', <?= $product['price']; ?>)">
+                            <button class="add-to-cart-btn"
+                                onclick='addToCart(
+        <?php echo json_encode($product["id"]) ?>,
+        <?php echo json_encode($product["name"]) ?>,
+        <?php echo json_encode($product["price"]) ?>
+    )'>
                                 Add to Cart
                             </button>
 
@@ -56,21 +60,44 @@
     </main>
 
     <script>
-        // Function to add product to cart (session storage)
+        // Function to add product to cart via MVC controller
         function addToCart(productId, productName, productPrice) {
-            fetch('add_to_cart.php', {
+            let origin = window.location.origin + '/';
+            let url = origin + 'index.php?page=cart&action=add_to_cart';
+
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", url);
+            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+            const body = JSON.stringify({
+                id: productId,
+                name: productName,
+                price: productPrice,
+            });
+            xhr.onload = () => {
+                if (xhr.readyState == 4 && xhr.status == 201) {
+                    console.log(JSON.parse(xhr.responseText));
+                } else {
+                    console.log(`Error: ${xhr.status}`);
+                }
+            };
+            xhr.send(body);
+
+            alert(url)
+            fetch(url, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
+                    body: {
                         id: productId,
                         name: productName,
                         price: productPrice,
-                    })
+                    }
                 })
                 .then(response => response.json())
                 .then(data => {
+                    alert(data)
                     if (data.status === 'success') {
                         alert('Product added to cart!');
                     } else {

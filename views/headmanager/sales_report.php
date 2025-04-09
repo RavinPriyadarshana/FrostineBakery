@@ -21,37 +21,30 @@
                 <input type="submit" value="Generate Report">
             </form>
 
-            <!-- Hardcoded sample results table -->
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Product</th>
-                        <th>Quantity Sold</th>
-                        <th>Total Revenue</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>2025-04-01</td>
-                        <td>Chocolate Bread</td>
-                        <td>40</td>
-                        <td>LKR 8,000</td>
-                    </tr>
-                    <tr>
-                        <td>2025-04-02</td>
-                        <td>Banana Muffins</td>
-                        <td>25</td>
-                        <td>LKR 5,000</td>
-                    </tr>
-                    <tr>
-                        <td>2025-04-03</td>
-                        <td>Butter Croissants</td>
-                        <td>35</td>
-                        <td>LKR 7,000</td>
-                    </tr>
-                </tbody>
-            </table>
+            <?php if (!empty($sales)): ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Product</th>
+                            <th>Quantity Sold</th>
+                            <th>Total Revenue</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($sales as $sale): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($sale['order_date']) ?></td>
+                                <td><?= htmlspecialchars($sale['item_name']) ?></td>
+                                <td><?= htmlspecialchars($sale['quantity']) ?></td>
+                                <td>LKR <?= number_format($sale['quantity'] * $sale['price'], 2) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php elseif ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
+                <p>No sales found for the selected date range.</p>
+            <?php endif; ?>
         </div>
     </main>
 

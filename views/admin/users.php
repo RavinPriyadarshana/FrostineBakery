@@ -14,29 +14,76 @@
 
   <main>
     <div class="user-container">
-      <h2>All Users</h2>
-      <table>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Actions</th>
-        </tr>
-        <!-- <?php foreach ($users as $user): ?>
-          <tr>
-            <td><?= $user['id'] ?></td>
-            <td><?= $user['name'] ?></td>
-            <td><?= $user['email'] ?></td>
-            <td>
-              <a href="index.php?page=admin&action=editUser&id=<?= $user['id'] ?>">Edit</a>
-              <a href="index.php?page=admin&action=deleteUser&id=<?= $user['id'] ?>" onclick="return confirm('Delete?')">Delete</a>
-            </td>
-          </tr>
-        <?php endforeach; ?> -->
-      </table>
+      <h2><?php echo $topic; ?></h2>
+      <?php
+      if ($topic == "Employees") {
+      ?>
+        <a href="index.php?page=add-employee" class="btn">Add New Employee</a>
+      <?php
+      }
+      ?>
+      <?php
+      if (isset($employees)) {
+        if ($employees != null) {
+      ?>
+          <table>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+            <?php
+
+            foreach ($employees as $employee): ?>
+              <tr>
+                <td><?= $employee['id'] ?></td>
+                <td><?= $employee['name'] ?></td>
+                <td><?= $employee['email'] ?></td>
+                <td><?= $employee['role'] ?></td>
+                <td>
+                  <a href="index.php?page=edit-employee&id=<?= $employee['id'] ?>">Edit</a>
+                  <a href="index.php?page=delete-employee&id=<?= $employee['id'] ?>" onclick="return confirm('Delete this employee?')">Delete</a>
+                </td>
+              </tr>
+        <?php endforeach;
+          }
+        } ?>
+
+          </table>
+
+          <?php
+          if (isset($customers)) {
+            if ($customers != null) {
+          ?>
+              <table>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Actions</th>
+                </tr>
+                <?php
+                foreach ($customers as $customer): ?>
+                  <tr>
+                    <td><?= $customer['id'] ?></td>
+                    <td><?= $customer['name'] ?></td>
+                    <td><?= $customer['email'] ?></td>
+                    <td>
+                      <a href="index.php?page=edit-customer&id=<?= $customer['id'] ?>">Edit</a>
+                      <a href="index.php?page=delete-customer&id=<?= $customer['id'] ?>" onclick="return confirm('Delete this customer?')">Delete</a>
+                      </td>
+                  </tr>
+            <?php endforeach;
+              }
+            } ?>
+
+              </table>
 
     </div>
   </main>
+
 
   <?php include 'views/includes/footer.php'; ?>
 </body>

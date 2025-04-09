@@ -25,6 +25,13 @@
                         <li><a href="index.php?page=admin">Home</a></li>
                 <?php
                     }
+
+                    if ($_SESSION['user_role']  == 'Cashier') {
+                        ?>
+                            <li><a href="index.php?page=cashier">Home</a></li>
+                    <?php
+                        }
+
                 }
                 ?>
                 <!-- Products Dropdown Menu -->

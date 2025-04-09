@@ -29,30 +29,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>ORD1234</td>
-                        <td>Sachini Perera</td>
-                        <td>Strawberry Cupcake</td>
-                        <td>12</td>
-                        <td>2025-04-02</td>
-                        <td>Pending</td>
-                    </tr>
-                    <tr>
-                        <td>ORD1235</td>
-                        <td>Ruwan Silva</td>
-                        <td>Cheese Bread</td>
-                        <td>8</td>
-                        <td>2025-04-03</td>
-                        <td>Delivered</td>
-                    </tr>
-                    <tr>
-                        <td>ORD1236</td>
-                        <td>Nimali Fernando</td>
-                        <td>Chocolate Roll</td>
-                        <td>5</td>
-                        <td>2025-04-03</td>
-                        <td>Cancelled</td>
-                    </tr>
+                    <?php foreach ($orderItems as $item): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($item['order_id']) ?></td>
+                            <td><?= htmlspecialchars($item['customer_name']) ?></td>
+                            <td><?= htmlspecialchars($item['product_name']) ?></td>
+                            <td><?= htmlspecialchars($item['quantity']) ?></td>
+                            <td><?= htmlspecialchars($item['order_date']) ?></td>
+                            <td><?= htmlspecialchars($item['status']) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

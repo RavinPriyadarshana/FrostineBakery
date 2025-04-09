@@ -16,40 +16,49 @@
 
         <div class="cart-container">
             <h2>Shopping Cart</h2>
-            <table>
-                <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Action</th>
-                </tr>
-                <tr>
-                    <td>Chocolate Cake</td>
-                    <td>2</td>
-                    <td>Rs. 1200</td>
-                    <td>
-                        <button class="remove-btn">Remove</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Strawberry Muffin</td>
-                    <td>1</td>
-                    <td>Rs. 500</td>
-                    <td>
-                        <button class="remove-btn">Remove</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>French Bread</td>
-                    <td>3</td>
-                    <td>Rs. 900</td>
-                    <td>
-                        <button class="remove-btn">Remove</button>
-                    </td>
-                </tr>
-            </table>
+            <?php if (empty($cartItems)): ?>
+                <p>Your cart is empty.</p>
+            <?php else: ?>
+                <table>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                    <?php foreach ($cartItems as $productId => $item): ?>
+                        <tr>
+                            <td><?= $item['name'] ?></td>
+                            <td><?= $item['price'] ?></td>
+                            <td>
+                                <form action="index.php?page=cart&action=update" method="POST">
+                                    <input type="number" name="quantity" value="<?= $item['quantity'] ?>" min="1">
+                                    <input type="hidden" name="product_id" value="<?= $productId ?>">
+                                    <input type="submit" value="Update">
+                                </form>
+                            </td>
+                            <td><?= $item['price'] * $item['quantity'] ?></td>
+                            <td>
+                                <form action="index.php?page=cart&action=remove" method="POST">
+                                    <input type="hidden" name="product_id" value="<?= $productId ?>">
+                                    <input type="submit" value="Remove">
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+
+                <h3>Total Price: <?= $totalPrice ?></h3>
+                <a href="index.php?page=cart&action=clear">Clear Cart</a>
+                <a href="index.php?page=order">Place Order</a>
+            <?php endif; ?>
+
         </div>
     </main>
+
+ 
+
 
     <?php include 'views/includes/footer.php'; ?>
 </body>

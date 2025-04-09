@@ -1,6 +1,7 @@
 /* Styles specific to the Register Page */
 body.report-page {
-    background-image: url('../images/background2.jpg'); /* Use background2.jpg */
+    background-image: url('../images/background2.jpg');
+    /* Use background2.jpg */
     background-size: cover;
     background-position: center;
     color: #fff;
@@ -12,8 +13,10 @@ body.report-page {
 }
 
 header {
-    background-color: #783b31; /* Dark background */
-    padding: 15px 50px; /* Padding for spacing */
+    background-color: #783b31;
+    /* Dark background */
+    padding: 15px 50px;
+    /* Padding for spacing */
     text-align: center;
     position: relative;
 }
@@ -41,7 +44,8 @@ header {
 
 header .logo-container h1 {
     font-size: 32px;
-    color: orange; /* Orange/yellow color */
+    color: orange;
+    /* Orange/yellow color */
     font-weight: bold;
     text-align: center;
     margin: 0;
@@ -62,7 +66,8 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: #FFD700; /* Gold hover effect */
+    color: #FFD700;
+    /* Gold hover effect */
 }
 
 .report-buttons {
@@ -73,14 +78,16 @@ nav ul li a:hover {
 .report-buttons a {
     text-decoration: none;
     color: white;
-    background-color: orange; /* Red buttons */
+    background-color: orange;
+    /* Red buttons */
     padding: 8px 16px;
     border-radius: 5px;
     font-weight: bold;
 }
 
 .report-buttons a:hover {
-    background-color: #FFD700; /* Lighter red on hover */
+    background-color: #FFD700;
+    /* Lighter red on hover */
     color: black;
 }
 
@@ -90,7 +97,8 @@ main {
     background-position: center;
     color: #fff;
     padding: 50px 0;
-    flex: 1; /* Ensures the main content takes up the remaining space */
+    flex: 1;
+    /* Ensures the main content takes up the remaining space */
 }
 
 .report-container {
@@ -175,7 +183,8 @@ header nav ul li a {
 }
 
 header nav ul li a:hover {
-    color: #FFD700; /* Gold hover effect */
+    color: #FFD700;
+    /* Gold hover effect */
 }
 
 /* Dropdown Button */
@@ -196,7 +205,8 @@ header nav ul li a:hover {
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f5f0e1; /* Light beige */
+    background-color: #f5f0e1;
+    /* Light beige */
     min-width: 160px;
     z-index: 1;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
@@ -223,3 +233,50 @@ header nav ul li a:hover {
     background-color: #666;
 }
 
+
+/* For all report and data pages */
+.report-container,
+.order-container,
+.employee-container {
+    padding: 1rem;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+    /* ensures horizontal scroll on mobile */
+}
+
+table thead {
+    background-color: #333;
+    color: white;
+}
+
+table th,
+table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Responsive tweak */
+@media screen and (max-width: 768px) {
+    table {
+        font-size: 14px;
+        min-width: unset;
+    }
+
+    .report-form input[type="date"],
+    .report-form input[type="submit"] {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        font-size: 20px;
+        text-align: center;
+    }
+}

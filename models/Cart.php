@@ -1,57 +1,62 @@
 <?php
 
-class Cart {
+class Cart
+{
+    private $db;
 
-    // Initialize the cart session if it's not set
-    public static function initCart() {
-        if (!isset($_SESSION['cart'])) {
-            $_SESSION['cart'] = [];
-        }
+    public function __construct($db)
+    {
+        $this->db = $db;
     }
 
-    // Add product to the cart
-    public static function addToCart($productId, $productName, $productPrice) {
-        // If the product is already in the cart, increment its quantity
-        if (isset($_SESSION['cart'][$productId])) {
-            $_SESSION['cart'][$productId]['quantity']++;
+    public function addToCart($userId, $productId, $productName, $productPrice)
+    {
+        // Check if item already exists in cart for the user
+        $stmt = $this->db->prepare("SELECT * FROM cart WHERE user_id = ? AND product_id = ?");
+        $stmt->execute([$userId, $productId]);
+
+        if ($stmt->rowCount() > 0) {
+            // Update quantity
+            $this->db->prepare("UPDATE cart SET quantity = quantity + 1 WHERE user_id = ? AND product_id = ?")
+                ->execute([$userId, $productId]);
         } else {
-            // Otherwise, add it as a new product
-            $_SESSION['cart'][$productId] = [
-                'name' => $productName,
-                'price' => $productPrice,
-                'quantity' => 1
-            ];
+            // Insert new product
+            $this->db->prepare("INSERT INTO cart (user_id, product_id, name, price, quantity) VALUES (?, ?, ?, ?, 1)")
+                ->execute([$userId, $productId, $productName, $productPrice]);
         }
     }
 
-    // Update the quantity of a product in the cart
-    public static function updateCart($productId, $quantity) {
-        if ($quantity > 0) {
-            $_SESSION['cart'][$productId]['quantity'] = $quantity;
-        }
+    public function getCartItems($userId)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM cart WHERE user_id = ?");
+        $stmt->execute([$userId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Remove a product from the cart
-    public static function removeFromCart($productId) {
-        unset($_SESSION['cart'][$productId]);
+    public function getTotalPrice($userId)
+    {
+        $stmt = $this->db->prepare("SELECT SUM(price * quantity) AS total FROM cart WHERE user_id = ?");
+        $stmt->execute([$userId]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['total'] ?? 0;
     }
 
-    // Get all the products in the cart
-    public static function getCart() {
-        return $_SESSION['cart'];
+    public function updateQuantity($userId, $productId, $quantity)
+    {
+        $this->db->prepare("UPDATE cart SET quantity = ? WHERE user_id = ? AND product_id = ?")
+            ->execute([$quantity, $userId, $productId]);
     }
 
-    // Calculate the total price of all items in the cart
-    public static function getTotalPrice() {
-        $total = 0;
-        foreach ($_SESSION['cart'] as $item) {
-            $total += $item['price'] * $item['quantity'];
-        }
-        return $total;
+    public function removeItem($userId, $productId)
+    {
+        $this->db->prepare("DELETE FROM cart WHERE user_id = ? AND product_id = ?")
+            ->execute([$userId, $productId]);
     }
 
-    // Clear the cart
-    public static function clearCart() {
-        unset($_SESSION['cart']);
+    public function clearCart($userId)
+    {
+        $this->db->prepare("DELETE FROM cart WHERE user_id = ?")
+            ->execute([$userId]);
     }
 }
+?>
