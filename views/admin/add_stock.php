@@ -11,7 +11,7 @@
   <?php include 'views/includes/header.php'; ?>
 
   <main>
-    <div class="form-container">
+    <div class="order-container">
       <h2>Add Stock for Product</h2>
       <form method="POST" action="index.php?page=save-stock">
         <label for="branch_id">Branch</label>
@@ -32,8 +32,8 @@
 
         <label for="quantity">Quantity</label>
         <input type="number" name="quantity" placeholder="Quantity" required min="1">
-
-        <button type="submit">Add Stock</button>
+<br>
+        <button type="submit" class="add-button">Add Stock</button>
       </form>
     </div>
   </main>

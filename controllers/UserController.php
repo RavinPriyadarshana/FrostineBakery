@@ -30,23 +30,23 @@ class UserController
                 $_SESSION["user_id"] = $user['id'];
 
                 switch ($user['role']) {
-                    case 'admin':
-                        header("Location: index.php?page=admin-dashboard");
+                    case 'Admin':
+                        header("Location: index.php?page=admin");
                         break;
-                    case 'headmanager':
-                        header("Location: index.php?page=headmanager-dashboard");
+                    case 'HeadManager':
+                        header("Location: index.php?page=dashboard");
                         break;
-                    case 'cashier':
-                        header("Location: index.php?page=cashier-dashboard");
+                    case 'Cashier':
+                        header("Location: index.php?page=cashier");
                         break;
-                    case 'branchmanager':
-                        header("Location: index.php?page=branchmanager-dashboard");
+                    case 'BranchManager':
+                        header("Location: index.php?page=dashboard");
                         break;
-                    case 'customer':
-                        header("Location: index.php?page=customer-dashboard");
+                    case null:
+                        header("Location: index.php?page=home");
                         break;
                     default:
-                        header("Location: index.php?page=home"); // fallback
+                        header("Location: index.php?page=home");
                         break;
                 }
                 exit;
@@ -97,6 +97,10 @@ class UserController
 
     public function addEmployeeForm()
     {
+        require_once 'models/User.php';
+        $userModel = new User();
+        $branches = $userModel->getAllBranches(); // get all branches
+
         include 'views/admin/add_employee.php';
     }
 
@@ -111,10 +115,25 @@ class UserController
             $role = $_POST['role'];
             $branch_id = $_POST['branch_id'];
 
-            $this->userModel->saveWithRole($name, $username, $email, $phone, $password, $role, $branch_id);
+            try {
+                $this->userModel->saveWithRole($name, $username, $email, $phone, $password, $role, $branch_id);
+                header('Location: index.php?page=employee-list');
+                exit;
+            } catch (PDOException $e) {
+                if ($e->getCode() === '23000') {
+                    // Duplicate entry error (likely email or username)
+                    $error = "Email or username already exists!";
+                } else {
+                    $error = "Something went wrong. Please try again later.";
+                }
 
-            header('Location: index.php?page=employee-list');
-            exit;
+                // Re-fetch branches to show form again
+                require_once 'models/User.php';
+                $userModel = new User();
+                $branches = $userModel->getAllBranches();
+
+                include 'views/admin/add_employee.php';
+            }
         }
     }
 
@@ -176,6 +195,7 @@ class UserController
         require_once 'models/User.php';
         $model = new User();
         $feedbacks = $model->getCustomerFeedbacks();
+        // echo json_encode($feedbacks);
         include 'views/headmanager/customer_requests.php';
     }
 

@@ -14,6 +14,9 @@
 
     <main>
         <div class="order-container">
+            <?php if (isset($error)): ?>
+                <p style="color: red;"><?= htmlspecialchars($error) ?></p>
+            <?php endif; ?>
             <h2>Add Employee</h2>
             <form method="POST" action="index.php?page=save-employee">
                 <input type="text" name="name" placeholder="Full Name" required>
@@ -22,8 +25,17 @@
                 <input type="text" name="phone" placeholder="Phone" required>
                 <input type="password" name="password" placeholder="Password" required>
                 <input type="text" name="role" placeholder="Role" required>
-                <input type="number" name="branch_id" placeholder="Branch ID" required>
-                <button type="submit">Add Employee</button>
+
+                <select name="branch_id" required>
+                    <option value="">Select Branch</option>
+                    <?php foreach ($branches as $branch): ?>
+                        <option value="<?= htmlspecialchars($branch['id']) ?>">
+                            <?= htmlspecialchars($branch['name']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
+                <button type="submit" class="add-button">Add Employee</button>
             </form>
         </div>
     </main>

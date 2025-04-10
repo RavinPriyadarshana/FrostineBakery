@@ -4,7 +4,7 @@
 <head>
     <link rel="stylesheet" href="assets/css/footer.css">
     <meta charset="UTF-8">
-    <title>Contact - Frostine Bakery</title>
+    <title>Place Order - Frostine Bakery</title>
     <link rel="stylesheet" href="assets/css/cart.css">
     <link rel="icon" href="assets/images/logo.jpg">
 </head>
@@ -13,7 +13,8 @@
     <?php include 'views/includes/header.php'; ?>
 
     <main>
-        <div class="checkout-container">
+
+        <div class="cart-container">
             <h2>Checkout</h2>
             <form action="index.php?page=order&action=confirm" method="POST">
                 <label>Card Holder Name:</label>
@@ -27,8 +28,9 @@
 
                 <label>CVV:</label>
                 <input type="text" name="cvv" required>
-
-                <input type="submit" value="Confirm Order">
+                <div class="row">
+                    <input type="submit" value="Confirm Order" class="update-btn">
+                </div>
             </form>
         </div>
     </main>

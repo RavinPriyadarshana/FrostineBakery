@@ -13,7 +13,7 @@
     <main>
         <div class="order-container">
             <h2>Stock Items</h2>
-            <a href="index.php?page=add-stock" class="btn">Add Stock</a>
+            <a href="index.php?page=add-stock" class="green-btn">Add Stock</a>
             <table>
                 <tr>
                     <th>ID</th>
@@ -30,8 +30,8 @@
                             <td><?= $stockItem['branch_name'] ?></td>
                             <td><?= $stockItem['quantity'] ?></td>
                             <td>
-                                <a href="index.php?page=edit-stock&id=<?= $stockItem['id'] ?>">Edit</a>
-                                <a href="index.php?page=delete-stock&id=<?= $stockItem['id'] ?>" onclick="return confirm('Delete this stock?')">Delete</a>
+                                <a href="index.php?page=edit-stock&id=<?= $stockItem['id'] ?>" class="blue-btn">Edit</a>
+                                <a href="index.php?page=delete-stock&id=<?= $stockItem['id'] ?>" class="red-btn" onclick="return confirm('Delete this stock?')">Delete</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

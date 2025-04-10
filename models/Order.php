@@ -18,17 +18,20 @@ class Order
             SELECT 
                 o.id AS order_id,
                 o.created_at AS order_date,
-                oi.item_name,
+                p.name AS product_name,
                 oi.quantity,
                 oi.price
             FROM orders o
             JOIN order_items oi ON o.id = oi.order_id
+            JOIN products p ON oi.product_id = p.id
             WHERE DATE(o.created_at) BETWEEN ? AND ?
             ORDER BY o.created_at DESC
         ");
         $stmt->execute([$startDate, $endDate]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
 
     // Optional: Get summarized sales per product
     public function getSummaryReport($startDate, $endDate)
@@ -58,13 +61,14 @@ class Order
                 p.name AS product_name,
                 p.price
             FROM stock s
-            JOIN products p ON s.item_id = p.id
+            JOIN products p ON s.product_id = p.id
             WHERE DATE(s.updated_at) BETWEEN ? AND ?
             ORDER BY s.updated_at DESC
         ");
         $stmt->execute([$startDate, $endDate]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
     public function getAllOrderItems()
     {
@@ -139,7 +143,7 @@ class Order
         return $stmt->fetchAll();
     }
 
-    
+
     // Create a new order
     public function createOrder($customer_id, $price, $branch)
     {
@@ -174,5 +178,4 @@ class Order
         $stmt->execute([$customerId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
 }

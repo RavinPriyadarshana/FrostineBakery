@@ -42,12 +42,12 @@
                                     <form method="POST" action="index.php?page=update_feedback_status" style="display:inline;">
                                         <input type="hidden" name="feedback_id" value="<?= $fb['id'] ?>">
                                         <input type="hidden" name="status" value="Responded">
-                                        <button type="submit">Mark Responded</button>
+                                        <button type="submit" class="blue-btn">Mark Responded</button>
                                     </form>
                                     <form method="POST" action="index.php?page=update_feedback_status" style="display:inline;">
                                         <input type="hidden" name="feedback_id" value="<?= $fb['id'] ?>">
                                         <input type="hidden" name="status" value="Resolved">
-                                        <button type="submit">Mark Resolved</button>
+                                        <button type="submit" class="green-btn">Mark Resolved</button>
                                     </form>
                                 </td>
                             </tr>

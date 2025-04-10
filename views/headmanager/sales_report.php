@@ -35,7 +35,7 @@
                         <?php foreach ($sales as $sale): ?>
                             <tr>
                                 <td><?= htmlspecialchars($sale['order_date']) ?></td>
-                                <td><?= htmlspecialchars($sale['item_name']) ?></td>
+                                <td><?= htmlspecialchars($sale['product_name']) ?></td>
                                 <td><?= htmlspecialchars($sale['quantity']) ?></td>
                                 <td>LKR <?= number_format($sale['quantity'] * $sale['price'], 2) ?></td>
                             </tr>

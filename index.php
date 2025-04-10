@@ -184,22 +184,22 @@ switch ($page) {
         require_once 'views/headmanager/dashboard.php';
         break;
 
-    case 'sales_reports':
-        require_once 'views/headmanager/sales_report.php';
-        break;
+    // case 'sales_reports':
+    //     require_once 'views/headmanager/sales_report.php';
+    //     break;
 
-    case 'sales_report':
+    case 'sales_reports':
         require_once 'controllers/OrderController.php';
         $controller = new OrderController();
         $controller->salesReport();
         break;
 
 
-    case 'stock_reports':
-        require_once 'views/headmanager/stock_report.php';
-        break;
+    // case 'stock_reports':
+    //     require_once 'views/headmanager/stock_report.php';
+    //     break;
 
-    case 'stock_report':
+    case 'stock_reports':
         require_once 'controllers/OrderController.php';
         $controller = new OrderController();
         $controller->stockReport();
@@ -214,7 +214,8 @@ switch ($page) {
 
 
     case 'customer_requests':
-        require_once 'views/headmanager/customer_requests.php';
+        $controller = new UserController();
+        $controller->showCustomerFeedbacks();
         break;
 
     case 'employees':

@@ -54,8 +54,7 @@
                 </table>
 
                 <h3>Total Price: <?= $totalPrice ?></h3>
-                <a href="index.php?page=cart&action=clear">Clear Cart</a>
-                <a href="index.php?page=order">Place Order</a>
+                <a href="index.php?page=order" class="place-order-btn">Place Order</a>
             <?php endif; ?>
 
         </div>

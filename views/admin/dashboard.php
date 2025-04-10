@@ -16,25 +16,19 @@
         <div class="dashboard-container">
             <div class="card">
                 <h3>View Profile</h3>
-                <p>View and manage your admin profile.</p>
-                <a href="index.php?page=admin_profile">My Profile</a>
-            </div>
-
-            <div class="card">
-                <h3>User Profile Management</h3>
-                <p>Update your user account details.</p>
-                <a href="index.php?page=user_profile">Update Profile</a>
+                <p>View and manage your profile.</p>
+                <a href="index.php?page=profile">My Profile</a>
             </div>
 
             <div class="card">
                 <h3>Employee Management</h3>
-                <p>Manage employee records (add/edit/delete).</p>
+                <p>Manage employee records.</p>
                 <a href="index.php?page=employee-list">Manage Employees</a>
             </div>
 
             <div class="card">
                 <h3>Customer Management</h3>
-                <p>Manage customer records (add/edit/delete).</p>
+                <p>Manage customer records </p>
                 <a href="index.php?page=customer-list">Manage Customers</a>
             </div>
 

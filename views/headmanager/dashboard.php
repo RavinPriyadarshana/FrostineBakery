@@ -45,13 +45,19 @@
                 <a href="index.php?page=profile">Profile</a>
             </div>
 
-
-            <div class="card">
-                <h3>Request Orders</h3>
-                <p>Request Orders.</p>
-                <a href="index.php?page=branch-manager-orders">Request</a>
-            </div>
-
+            <?php
+            if (isset($_SESSION['user_role'])) {
+                if ($_SESSION['user_role'] == 'BranchManager') {
+            ?>
+                    <div class="card">
+                        <h3>Request Orders</h3>
+                        <p>Request Orders.</p>
+                        <a href="index.php?page=branch-manager-orders">Request</a>
+                    </div>
+            <?php
+                }
+            }
+            ?>
         </div>
     </main>
 

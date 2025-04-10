@@ -114,18 +114,6 @@ h2 {
     border-radius: 5px;
 }
 
-.remove-btn {
-    background: red;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.remove-btn:hover {
-    background: darkred;
-}
 
 .checkout-btn {
     background-color: #c98d83;
@@ -153,19 +141,9 @@ footer {
     margin-top: auto;
 }
 
-/* Buttons */
-.update-btn {
-    background: rgb(255, 200, 0);
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-}
 
-.update-btn:hover {
-    background: darkred;
-}
+
+/* Buttons */
 
 .remove-btn {
     background: red;
@@ -178,6 +156,32 @@ footer {
 
 .remove-btn:hover {
     background: darkred;
+}
+
+.place-order-btn {
+    background: rgb(48, 62, 167);
+    color: rgb(255, 255, 255);
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.place-order-btn:hover {
+    background: rgb(62, 122, 156);
+}
+
+.update-btn {
+    background: rgb(23, 162, 13);
+    color: rgb(255, 255, 255);
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.update-btn:hover {
+    background: rgb(62, 122, 156);
 }
 
 /* Dropdown Styling */

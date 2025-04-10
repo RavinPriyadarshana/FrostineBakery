@@ -87,9 +87,17 @@ class User
 
     public function getCustomerFeedbacks()
     {
-        $stmt = $this->db->prepare("SELECT * FROM feedback");
+        $stmt = $this->db->prepare("
+            SELECT 
+                f.id, f.message, f.status, f.created_at,
+                c.name AS customer_name, c.email
+            FROM feedback f
+            JOIN users c ON f.customer_id = c.id
+        ");
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
     // Update feedback status
     public function updateFeedbackStatus($id, $status)

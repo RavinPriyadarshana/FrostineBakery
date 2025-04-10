@@ -13,12 +13,12 @@
   <?php include 'views/includes/header.php'; ?>
 
   <main>
-    <div class="user-container">
+    <div class="order-container">
       <h2><?php echo $topic; ?></h2>
       <?php
       if ($topic == "Employees") {
       ?>
-        <a href="index.php?page=add-employee" class="btn">Add New Employee</a>
+        <a href="index.php?page=add-employee" class="green-btn">Add New Employee</a>
       <?php
       }
       ?>
@@ -43,8 +43,8 @@
                 <td><?= $employee['email'] ?></td>
                 <td><?= $employee['role'] ?></td>
                 <td>
-                  <a href="index.php?page=edit-employee&id=<?= $employee['id'] ?>">Edit</a>
-                  <a href="index.php?page=delete-employee&id=<?= $employee['id'] ?>" onclick="return confirm('Delete this employee?')">Delete</a>
+                  <a href="index.php?page=edit-employee&id=<?= $employee['id'] ?>" class="blue-btn">Edit</a>
+                  <a href="index.php?page=delete-employee&id=<?= $employee['id'] ?>" class="red-btn" onclick="return confirm('Delete this employee?')">Delete</a>
                 </td>
               </tr>
         <?php endforeach;
@@ -62,7 +62,6 @@
                   <th>ID</th>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>Actions</th>
                 </tr>
                 <?php
                 foreach ($customers as $customer): ?>
@@ -70,10 +69,6 @@
                     <td><?= $customer['id'] ?></td>
                     <td><?= $customer['name'] ?></td>
                     <td><?= $customer['email'] ?></td>
-                    <td>
-                      <a href="index.php?page=edit-customer&id=<?= $customer['id'] ?>">Edit</a>
-                      <a href="index.php?page=delete-customer&id=<?= $customer['id'] ?>" onclick="return confirm('Delete this customer?')">Delete</a>
-                      </td>
                   </tr>
             <?php endforeach;
               }

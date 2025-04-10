@@ -29,7 +29,6 @@ class OrderController
 
     public function salesReport()
     {
-        require_once 'models/OrderModel.php';
         $model = new Order();
 
         $sales = [];
@@ -37,6 +36,7 @@ class OrderController
             $startDate = $_POST['start_date'];
             $endDate = $_POST['end_date'];
             $sales = $model->getSalesReport($startDate, $endDate);
+            // echo json_encode($sales);
         }
 
         require 'views/headmanager/sales_report.php';
