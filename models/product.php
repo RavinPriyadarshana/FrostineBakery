@@ -64,4 +64,40 @@ class Product
         $stmt = $this->db->query("SELECT * FROM products");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getProductById($id)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM products WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // Update a product in the database
+    public function updateProduct($id, $name, $description, $price, $category, $image)
+    {
+        if ($image !== null && $image !== "") {
+            // Update including image
+            $sql = "UPDATE products SET name = :name, description = :description, price = :price, category = :category, image = :image WHERE id = :id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                'name' => $name,
+                'description' => $description,
+                'price' => $price,
+                'category' => $category,
+                'image' => $image,
+                'id' => $id
+            ]);
+        } else {
+            // Update without changing image
+            $sql = "UPDATE products SET name = :name, description = :description, price = :price, category = :category WHERE id = :id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                'name' => $name,
+                'description' => $description,
+                'price' => $price,
+                'category' => $category,
+                'id' => $id
+            ]);
+        }
+    }
 }

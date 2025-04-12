@@ -178,4 +178,87 @@ class Order
         $stmt->execute([$customerId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getOrdersByCustomer($customerId)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM orders WHERE customer_id = :customerId");
+        $stmt->bindParam(':customerId', $customerId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    public function getDailyOrdersByBranch($branchId)
+    {
+        $today = date('Y-m-d');
+        $stmt = $this->db->prepare("SELECT * FROM orders WHERE DATE(order_date) = :today AND branch_id = :branchId");
+        $stmt->bindParam(':today', $today);
+        $stmt->bindParam(':branchId', $branchId);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getDailyOrders()
+    {
+        $today = date('Y-m-d');
+
+        $stmt = $this->db->prepare("SELECT * FROM orders WHERE DATE(order_date) = :today");
+        $stmt->bindParam(':today', $today);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    public function getAllRequests()
+    {
+        $stmt = $this->db->query("
+        SELECT 
+            r.*, 
+            u.name AS requester_name, 
+            u.email, 
+            p.name AS product_name, 
+            p.description AS product_description, 
+            p.price AS product_price, 
+            p.category AS product_category, 
+            p.image AS product_image
+        FROM branch_order_requests r
+        LEFT JOIN users u ON r.user_id = u.id
+        LEFT JOIN products p ON r.product_id = p.id
+        ORDER BY r.request_at DESC
+    ");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function updateRequestStatus($requestId, $status)
+    {
+        $stmt = $this->db->prepare("UPDATE branch_order_requests SET status = :status WHERE id = :id");
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':id', $requestId, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function filterRequestsByDate($startDate, $endDate)
+    {
+        $stmt = $this->db->prepare("
+        SELECT 
+            r.*, 
+            u.name AS requester_name, 
+            u.email, 
+            p.name AS product_name, 
+            p.description AS product_description, 
+            p.price AS product_price, 
+            p.category AS product_category, 
+            p.image AS product_image
+        FROM branch_order_requests r
+        LEFT JOIN users u ON r.user_id = u.id
+        LEFT JOIN products p ON r.product_id = p.id
+        WHERE DATE(r.request_at) BETWEEN :start AND :end
+        ORDER BY r.request_at DESC
+    ");
+        $stmt->bindParam(':start', $startDate);
+        $stmt->bindParam(':end', $endDate);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

@@ -38,6 +38,7 @@
                 <?php
                 if (!isset($_SESSION['user'])) {
                 ?>
+                    <li><a href="index.php?page=home">Home</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropbtn">Products</a>
                         <div class="dropdown-content">
@@ -48,10 +49,7 @@
                             <a href="index.php?page=category&type=short_eats">Short Eats</a>
                         </div>
                     </li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="index.php?page=contact_us">Contact Us</a></li>
-                    <li><a href="index.php?page=cart">Cart</a></li>
-                    <li><a href="index.php?page=my-orders">My Orders</a></li>
+                    <li><a href="index.php?page=contact_us">Customer Request</a></li>
                     <?php
                 } else {
                     if ($_SESSION['user_role'] == null) {
@@ -66,8 +64,7 @@
                                 <a href="index.php?page=category&type=short_eats">Short Eats</a>
                             </div>
                         </li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="index.php?page=contact_us">Contact Us</a></li>
+                        <li><a href="index.php?page=contact_us">Customer Request</a></li>
                         <li><a href="index.php?page=cart">Cart</a></li>
                         <li><a href="index.php?page=my-orders">My Orders</a></li>
                 <?php

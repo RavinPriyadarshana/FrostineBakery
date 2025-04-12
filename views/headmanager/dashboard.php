@@ -40,6 +40,12 @@
                 <a href="index.php?page=customer_requests">View Requests</a>
             </div>
             <div class="card">
+                <h3>Order Requests</h3>
+                <p>Review and respond to order requests.</p>
+                <a href="index.php?page=order_requests">View Requests</a>
+            </div>
+
+            <div class="card">
                 <h3>User Profile</h3>
                 <p>View or update your profile details.</p>
                 <a href="index.php?page=profile">Profile</a>

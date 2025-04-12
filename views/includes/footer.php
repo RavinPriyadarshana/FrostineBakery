@@ -5,7 +5,7 @@
         <div class="footer-column">
             <h3>Address</h3>
             <p>No.UCSC Building Complex, 35 Reid Ave,<br>Colombo 00700</p>
-            <div class="social-icons">
+            <div class="social-icons" style="display: flex; justify-content:center;">
                 <a href="#" class="social-icon">
                     <img src="assets/images/media/facebook-icon.png" alt="Facebook">
                 </a>

@@ -236,6 +236,26 @@ switch ($page) {
         $controller->updateFeedbackStatus();
         break;
 
+    case 'order_requests':
+        require_once 'controllers/OrderController.php';
+        $controller = new OrderController();
+        $controller->showOrderRequests();
+        break;
+
+    case 'update_order_request_status':
+        require_once 'controllers/OrderController.php';
+        $controller = new OrderController();
+        $controller->updateOrderRequestStatus();
+        break;
+
+    case 'filter_order_requests':
+        $controller = new OrderController();
+        $controller->showFilteredOrderRequests();
+        break;
+
+
+
+
     //Admin func
 
     case 'admin':
@@ -314,6 +334,12 @@ switch ($page) {
         $controller->saveProduct();
         break;
 
+    case 'view_products':
+        $controller = new ProductController();
+        $controller->viewProducts();
+        break;
+
+
     // Add stock form
     case 'add-stock':
         $controller = new StockController();
@@ -325,6 +351,17 @@ switch ($page) {
         $controller = new StockController();
         $controller->saveStock();
         break;
+
+    case 'edit-product':
+        $controller = new ProductController();
+        $controller->editProductPage();  // Display the edit form
+        break;
+
+    case 'save-edited-product':
+        $controller = new ProductController();
+        $controller->saveEditedProduct();  // Save the updated product
+        break;
+
 
 
     // Cashier func

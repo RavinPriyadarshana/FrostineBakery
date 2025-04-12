@@ -40,7 +40,7 @@
                     <input type="number" name="quantity" min="1" required>
                 </div>
 
-                <button type="submit">Submit Order Request</button>
+                <button type="submit" class="blue-btn">Submit Order Request</button>
             </form>
         </div>
     </main>

@@ -41,21 +41,19 @@
             <?php echo json_encode($product["image"]) ?>
         )'>View Details</button>
 
-                            <!-- <button class="add-to-cart-btn"
-                                onclick='addToCart(
-        <?php echo json_encode($product["id"]) ?>,
-        <?php echo json_encode($product["name"]) ?>,
-        <?php echo json_encode($product["price"]) ?>
-    )'>
-                                Add to Cart
-                            </button> -->
-
 
                             <form method="POST" action="index.php?page=cart&action=add_to_cart">
                                 <input type="hidden" name="id" value="<?= $product['id']; ?>">
                                 <input type="hidden" name="name" value="<?= htmlspecialchars($product['name']); ?>">
                                 <input type="hidden" name="price" value="<?= $product['price']; ?>">
-                                <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+
+                                <?php
+                                if (isset($_SESSION['user_role'])) {
+                                ?>
+                                    <button type="submit" class="yellow-btn">Add to Cart</button>
+                                <?php
+                                }
+                                ?>
                             </form>
 
                         </div>
@@ -121,8 +119,8 @@
             <span class="close-btn" onclick="closeModal()">&times;</span>
             <h2 id="modalName"></h2>
             <img id="modalImage" src="" alt="Product Image" class="modal-image">
-            <p id="modalDescription"></p>
-            <p id="modalPrice"></p>
+            <p style="color: black;" id="modalDescription"></p>
+            <p style="color: black;" id="modalPrice"></p>
         </div>
     </div>
 

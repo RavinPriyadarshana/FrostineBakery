@@ -173,4 +173,42 @@ class OrderController
             exit;
         }
     }
+
+    public function showOrderRequests()
+    {
+        $orderModel = new Order();
+        $requests = $orderModel->getAllRequests();
+        include 'views/headmanager/order_requests_view.php';
+    }
+
+    public function updateOrderRequestStatus()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $requestId = $_POST['request_id'] ?? null;
+            $status = $_POST['status'] ?? null;
+
+            if ($requestId && $status) {
+                $orderModel = new Order($this->db);
+                $orderModel->updateRequestStatus($requestId, $status);
+            }
+        }
+
+        // Redirect back to the order requests page after update
+        header("Location: index.php?page=order_requests");
+        exit();
+    }
+
+    public function showFilteredOrderRequests()
+    {
+        $orderModel = new Order();
+        $requests = [];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['start_date'], $_POST['end_date'])) {
+            $start = $_POST['start_date'];
+            $end = $_POST['end_date'];
+            $requests = $orderModel->filterRequestsByDate($start, $end);
+        }
+
+        include 'views/headmanager/filter_order_request.php';
+    }
 }

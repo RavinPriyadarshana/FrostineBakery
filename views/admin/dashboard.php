@@ -21,6 +21,12 @@
             </div>
 
             <div class="card">
+                <h3>Products</h3>
+                <p>View and manage products.</p>
+                <a href="index.php?page=view_products">View Products</a>
+            </div>
+
+            <div class="card">
                 <h3>Employee Management</h3>
                 <p>Manage employee records.</p>
                 <a href="index.php?page=employee-list">Manage Employees</a>

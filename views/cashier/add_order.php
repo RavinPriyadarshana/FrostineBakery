@@ -50,7 +50,7 @@
                     <input type="number" name="quantity" min="1" required>
                 </div>
 
-                <button type="submit">Create Order</button>
+                <button type="submit" class="blue-btn">Create Order</button>
             </form>
         </div>
     </main>

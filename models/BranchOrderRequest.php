@@ -11,12 +11,25 @@ class BranchOrderRequest
     // Create a new order request
     public function createOrderRequest($productId, $quantity, $branchId)
     {
-        $stmt = $this->db->prepare("INSERT INTO branch_order_requests (product_id, quantity, branch_id) 
-                                    VALUES (:product_id, :quantity, :branch_id)");
+
+        $userId = $_SESSION['user_id']; 
+        
+
+        $stmt = $this->db->prepare("INSERT INTO branch_order_requests (branch_name, item_name, quantity, requested_date, status, user_id)
+                      VALUES (:branchName, :itemName, :quantity, NOW(), 'Pending', :userId)");
+
+        $stmt->bindParam(':branch_id', $branchId);
         $stmt->bindParam(':product_id', $productId);
         $stmt->bindParam(':quantity', $quantity);
-        $stmt->bindParam(':branch_id', $branchId);
+        $stmt->bindParam(':userId', $userId);
         $stmt->execute();
+
+        // $stmt = $this->db->prepare("INSERT INTO branch_order_requests (product_id, quantity, branch_id) 
+        //                             VALUES (:product_id, :quantity, :branch_id)");
+        // $stmt->bindParam(':product_id', $productId);
+        // $stmt->bindParam(':quantity', $quantity);
+        // $stmt->bindParam(':branch_id', $branchId);
+        // $stmt->execute();
     }
 
     // Optionally, fetch all order requests if needed for listing

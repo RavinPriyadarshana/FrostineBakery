@@ -68,6 +68,7 @@ class BranchManagerController
             $productId = $_POST['product_id'];
             $quantity = $_POST['quantity'];
             $branchId = $_POST['branch_id'];
+            
 
             // Create a new BranchOrderRequest model instance and save the order
             $branchOrderRequestModel = new BranchOrderRequest();
@@ -91,17 +92,12 @@ class BranchManagerController
     public function sendDailyOrders()
     {
         $orderModel = new Order();
-        $orders = $orderModel->getDailyOrders(); // Get the daily orders for the branch
-        // Process or send these orders to the head office (e.g., via email or API)
-        // Here you can add a method that sends the data
+        $orders = $orderModel->getDailyOrders(); 
         $this->sendOrdersToHeadOffice($orders);
     }
 
     private function sendOrdersToHeadOffice($orders)
     {
-        // Example function to simulate sending the orders
-        // This can be an email, API call, or database entry for the head office
-        // For now, we'll simulate that the orders are sent successfully
         echo "Sending the following orders to the Head Office: ";
         print_r($orders);
     }
